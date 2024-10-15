@@ -1,20 +1,27 @@
 from bs4 import BeautifulSoup
-from main.parser import parse_viewheader, compile_subsection
+from USLegalCodeMap.main.parse_html import parse_viewheader, parse_block, compile_subsection
 import os
 import json
 
-# Sample HTML content mimicking `viewheader_subdiv`
-file_path = os.path.join("data", "section1182.xhtml")
+# Sample HTML content ksmimicking `viewheader_subdiv`
+file_path = os.path.join("data", "section1182.xhtml" if os.path.exists("data/section1182.xhtml") else "section1182.html")
+
 
 with open(file_path, "r", encoding="utf-8") as file:
     html_content = file.read()
 
 # Parse the HTML content with BeautifulSoup
 soup = BeautifulSoup(html_content, 'html.parser')
-section = parse_viewheader(soup)
 
-section1182 = compile_subsection(soup)
-print(json.dumps(section1182, indent=4))
+section1182 = parse_block(soup)
+
+print(section1182)
+
+
+# section = parse_viewheader(soup)
+
+# section1182 = compile_subsection(soup)
+# print(json.dumps(section1182, indent=4))
 
 # # Print the returned Section instance to view its structure
 # print("Parsed Hierarchy:")
