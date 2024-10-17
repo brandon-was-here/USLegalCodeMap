@@ -6,12 +6,21 @@ class ClauseHierarchy:
         self.desc = desc
         self.preamble = preamble
         self.parent = parent
+        self.children = []
         self.internal_reference = []
         self.external_reference = []
 
-    def __str__(self):
-        return (f"{self.name} {self.number} (Rank: {self.rank})\n"
-                f"Description: {self.desc}\nPreamble: {self.preamble}")
+    def add_child(self, child):
+        self.children.append(child)
+        child.parent = self
+
+    def __str__(self, level=0):
+        """Compact string representation for terminal output."""
+        indent = "  " * level
+        result = f"{indent}- {self.__class__.__name__} {self.number}: {self.name} (Rank: {self.rank})\n"
+        for child in self.children:
+            result += child.__str__(level + 1)
+        return result
     
     @property
     def title(self):

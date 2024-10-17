@@ -1,7 +1,7 @@
 import unittest
 from bs4 import BeautifulSoup
 from main.parser import parse_viewheader
-from main.class_hierarchy import Section
+from main.structure.class_hierarchy import Section
 import os
 
 class TestParser(unittest.TestCase):
